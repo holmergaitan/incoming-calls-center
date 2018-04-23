@@ -1,0 +1,33 @@
+##
+# SPRING BOOT APP CONFIGURATION
+##
+server:
+  port: 9999
+endpoints:
+  actuator:
+    path: actuator
+  enabled: false
+  sensitive: true
+  health:
+    enabled: true
+    sensitive: false
+  info:
+    enabled: true
+    sensitive: false
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:mydb;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL;INIT=CREATE SCHEMA IF NOT EXISTS clc
+    username: sa
+    password: sa
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        hibernate.hbm2ddl.auto: update
+      id:
+        new_generator_mappings: false
+      format_sql: true
+
+pendingcallscheduler:
+  task: "0 0/1 * * * ?"

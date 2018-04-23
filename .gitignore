@@ -1,0 +1,11 @@
+Exclude .gitignore
+!.gitignore
+
+# Eclipse specific
+*.classpath
+*.project
+*.settings/
+target/
+test-output/
+.idea/
+*.iml
