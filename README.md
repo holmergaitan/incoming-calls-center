@@ -25,6 +25,7 @@ Para realizar la construccion del proyecto, seguir los siguientes pasos:
 ## Datos adicionales
 
 En la ruta com/callcenter/app/model, hay un diagrama de la solución.
+Los test se encuentran en la ruta src/test/java
 
 ---
 
