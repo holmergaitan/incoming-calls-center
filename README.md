@@ -21,19 +21,27 @@ Para realizar la construccion del proyecto, seguir los siguientes pasos:
 3. La cantidad de ejecución de hilos se controla mediante el uso de la interface ExcecutorService, con un número fijo de hilos (10). Si llega una llamada y no hay hilos disponibles, la instancia del ExecutorService la ejecutará cuando se encuentre disponible algún hilo de ejecución.
 4. En la llamada se almacena la respuesta del empleado que respondió y el nombre del hilo de ejecución.
 ---
+
 ## Datos adicionales
+
 En la ruta com/callcenter/app/model, hay un diagrama de la solución.
 ---
+
 ## Consulta y envío de nuevas llamadas
+
 El sistema de llamadas incia con 12 empleados disponibles.
-1. Para enviar una llamada, enviar una peticion POST a: {host}:9999/calls/
+
+1. Para enviar una llamada, enviar una peticion POST a: **{host}:9999/calls/**
+```
 	{
 		"name": "Marge Simpson",
 		"message": "You should not eat that thing",
 		"state": "PENDING",
 		"duration": 5
 	}
-2. Para consultar todas las llamadas, enviar petición GET a: {host}:9999/calls/allcalls
+```
+2. Para consultar todas las llamadas, enviar petición GET a: **{host}:9999/calls/allcalls**
+```
 	[
 		{
 			"id": 1,
@@ -166,7 +174,9 @@ El sistema de llamadas incia con 12 empleados disponibles.
 			"answerDate": "2018-04-22T21:29:05.003+0000"
 		}
 	]
-3. Para consultar llamadas pendientes, enviar petición GET a: {host}:9999/calls/pendingcalls
+```
+3. Para consultar llamadas pendientes, enviar petición GET a: **{host}:9999/calls/pendingcalls**
+```
 	[
 		{
 			"id": 1,
@@ -329,3 +339,45 @@ El sistema de llamadas incia con 12 empleados disponibles.
 			"answerDate": null
 		}
 	]
+```
+4. Para generar multiples llamadas, enviar petición GET a: **{host}:9999/calls/sendcalls**
+```
+[
+    {
+        "name": "Rachel Duncan",
+        "message": "My name is Rachel Duncan, and we are going to come to terms.",
+        "state": "PENDING",
+        "duration": 5
+    },
+    {
+        "name": "Sarah Manning",
+        "message": "She looks exactly like me!",
+        "state": "PENDING",
+        "duration": 9
+    },
+    {
+        "name": "Cosima Neiehaus",
+        "message": "Everything we are... belongs to them",
+        "state": "PENDING",
+        "duration": 8
+    },
+    {
+        "name": "Allison Hendrix",
+        "message": "You really have no idea, do you?!",
+        "state": "PENDING",
+        "duration": 9
+    },
+    {
+        "name": "Krystal Goderich",
+        "message": "Do i look stupid?",
+        "state": "PENDING",
+        "duration": 7
+    },
+    {
+        "name": "Helena",
+        "message": "Hello sestra...",
+        "state": "PENDING",
+        "duration": 5
+    }
+]
+```
