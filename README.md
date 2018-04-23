@@ -25,6 +25,7 @@ Para realizar la construccion del proyecto, seguir los siguientes pasos:
 ## Datos adicionales
 
 En la ruta com/callcenter/app/model, hay un diagrama de la solución.
+
 ---
 
 ## Consulta y envío de nuevas llamadas
