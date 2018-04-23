@@ -1,6 +1,9 @@
 package com.callcenter.app.scheduler;
 
 import com.callcenter.app.service.IncomingCallService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -13,6 +16,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PendingCallsScheduler {
+	
+	/** The Constant LOGGER. */
+	private static final Logger LOGGER = 
+			LoggerFactory.getLogger(PendingCallsScheduler.class);
 
 	/** The call service. */
 	private IncomingCallService callService;
@@ -35,7 +42,7 @@ public class PendingCallsScheduler {
 	@Scheduled(cron = "${pendingcallscheduler.task}")
 	public void answerPendingCalls() {
 
-		System.out.println("Trying to answer pending calls....");
+		LOGGER.info("Trying to answer pending calls....");
 		callService.answerAllCalls();
 	}
 }

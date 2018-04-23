@@ -1,7 +1,6 @@
 package com.callcenter.app.service;
 
 import java.util.ArrayList;
-import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import org.mockito.InjectMocks;
@@ -11,9 +10,7 @@ import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.callcenter.app.databuilder.DataBuilder;
 import com.callcenter.app.jpa.ICallDao;
-import com.callcenter.app.model.call.Call;
 
 /**
  * Test the {@link IncomingCallService} class
@@ -23,7 +20,7 @@ import com.callcenter.app.model.call.Call;
  */
 @SuppressWarnings("unchecked")
 public class IncomingCallServiceMockTest extends PowerMockTestCase {
-
+    
 	/** The call dao. */
 	@Mock
 	private ICallDao callDao;
@@ -31,9 +28,6 @@ public class IncomingCallServiceMockTest extends PowerMockTestCase {
 	/** The call dispatcher. */
 	@InjectMocks
 	private CallDispatcher callDispatcher;
-
-	/** The incoming call service. */
-	private IncomingCallService incomingCallService;
 
 	/**
 	 * Send multiple calls answering attempts(10). The callDispatcher contains 16
@@ -45,7 +39,7 @@ public class IncomingCallServiceMockTest extends PowerMockTestCase {
 	@Test(priority = 0)
 	public void answerMultipleCallsTest() throws InterruptedException {
 
-		incomingCallService = new IncomingCallService(callDispatcher);
+        final IncomingCallService incomingCallService = new IncomingCallService(callDispatcher);
 		Mockito.when(callDao.saveAll(Mockito.any(Iterable.class))).thenReturn(new ArrayList<>());
 
 		for (int i = 0; i < 10; i++) {
@@ -67,14 +61,10 @@ public class IncomingCallServiceMockTest extends PowerMockTestCase {
 	@Test(priority = 1)
 	public void answerAllCallsTest() throws InterruptedException {
 
-		final PriorityBlockingQueue<Call> calls = DataBuilder.getCallData();
-		incomingCallService = new IncomingCallService(callDispatcher);
+        final IncomingCallService incomingCallService  = new IncomingCallService(callDispatcher);
 		Mockito.when(callDao.saveAll(Mockito.any(Iterable.class))).thenReturn(new ArrayList<>());
-		calls.forEach(call -> callDispatcher.receiveIncomingCall(call));
 
-		incomingCallService.answerAllCalls();
-
-		TimeUnit.SECONDS.sleep(20);
-		Assert.assertEquals(Integer.valueOf(4), callDispatcher.countPendingCalls());
+		incomingCallService.answerSingleCall();
+		Assert.assertEquals(Integer.valueOf(6), callDispatcher.countPendingCalls());
 	}
 }

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.PriorityBlockingQueue;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +26,10 @@ import com.callcenter.app.model.employee.EmployeePriority;
  */
 @Component
 public class CallDispatcher implements Callable<String> {
+	
+	/** The Constant LOGGER. */
+	private static final Logger LOGGER = 
+			LoggerFactory.getLogger(CallDispatcher.class);
 
 	/** Contains all employees ordered by {@link EmployeePriority}. */
 	private PriorityBlockingQueue<AbstractEmployee> employees;
@@ -128,7 +134,9 @@ public class CallDispatcher implements Callable<String> {
 		final Call currentCall = calls.poll();
 		if (currentCall != null) {
 
-			System.out.println("Sending call from: " + currentCall.getName() + Thread.currentThread().getName());
+			LOGGER.info("Sending call from: [{}]. Processed by thread: [{}]",  
+					currentCall.getName(), Thread.currentThread().getName());
+			
 			final AbstractEmployee availableEmployee = employees.poll();
 			if (availableEmployee != null) {
 
