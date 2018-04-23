@@ -5,7 +5,6 @@ import com.callcenter.app.model.employee.*;
 
 import java.util.concurrent.PriorityBlockingQueue;
 
-// TODO: Auto-generated Javadoc
 /**
  * Contains data for testing and initial applicacion start up.
  *
