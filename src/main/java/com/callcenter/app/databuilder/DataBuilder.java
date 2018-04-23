@@ -63,10 +63,10 @@ public class DataBuilder  {
         calls.add(new Call("Kent Brockman", "You are viewing channel six."));
         calls.add(new Call("Willie", "Damn scots! They ruined Scotland"));
         calls.add(new Call("Maude Flanders", "Lets talk about jesus."));
-        calls.add(new Call("Philip J Fry", "I came from 20th century"));
-        calls.add(new Call("Turanga Leela", "Im a ciclope"));
+        calls.add(new Call("Philip J Fry", "I came from 20th century."));
+        calls.add(new Call("Turanga Leela", "Im a ciclope."));
         calls.add(new Call("Bender", "Bite my shinny a**"));
-        calls.add(new Call("Bonder", "I will kill you, Bender"));
+        calls.add(new Call("Bonder", "I will kill you, Bender."));
         
         return calls;
     }
