@@ -73,4 +73,10 @@ public abstract class AbstractEmployee {
 		currentCall.setResponse(String.format("Answered by %s[%s]. Executed by thread: %s ", getName(), toString(),
 				Thread.currentThread().getName()));
 	}
+	
+	@Override
+	public String toString() {
+		
+		return name + " " + priority;
+	}
 }

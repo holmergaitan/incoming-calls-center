@@ -26,18 +26,17 @@ import com.callcenter.app.model.employee.EmployeePriority;
  */
 @Component
 public class CallDispatcher implements Callable<String> {
-	
+
 	/** The Constant LOGGER. */
-	private static final Logger LOGGER = 
-			LoggerFactory.getLogger(CallDispatcher.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CallDispatcher.class);
 
 	/** Contains all employees ordered by {@link EmployeePriority}. */
 	private PriorityBlockingQueue<AbstractEmployee> employees;
 
-	/** Contains all pending calls ordered by default priority */
+	/** Contains all pending calls ordered by default priority. */
 	private PriorityBlockingQueue<Call> calls;
 
-	/** Contains operations to store calls */
+	/** Contains operations to store calls. */
 	private ICallDao callDao;
 
 	/**
@@ -78,6 +77,17 @@ public class CallDispatcher implements Callable<String> {
 		call.setState(CallState.PENDING);
 		calls.put(call);
 		callDao.saveAll(calls);
+	}
+
+	/**
+	 * Adds the new employee.
+	 *
+	 * @param employee
+	 *            the employee
+	 */
+	public void addNewEmployee(final AbstractEmployee employee) {
+
+		employees.put(employee);
 	}
 
 	/**
@@ -122,6 +132,33 @@ public class CallDispatcher implements Callable<String> {
 	}
 
 	/**
+	 * Adds the new employees.
+	 *
+	 * @param employees
+	 *            the employees
+	 */
+	public void addNewEmployees(final List<AbstractEmployee> employees) {
+
+		employees.forEach(employee -> addNewEmployee(employee));
+	}
+
+	/**
+	 * Delete all calls.
+	 */
+	public void deleteAllCalls() {
+
+		calls.clear();
+	}
+
+	/**
+	 * Delete all employees.
+	 */
+	public void deleteAllEmployees() {
+
+		employees.clear();
+	}
+
+	/**
 	 * Dispatch a call. Process the call with an available employee If there is not
 	 * available employees, return the call to the queue,
 	 *
@@ -134,12 +171,13 @@ public class CallDispatcher implements Callable<String> {
 		final Call currentCall = calls.poll();
 		if (currentCall != null) {
 
-			LOGGER.info("Sending call from: [{}]. Processed by thread: [{}]",  
-					currentCall.getName(), Thread.currentThread().getName());
-			
+			LOGGER.info("Sending call from: [{}]. Processed by thread: [{}]", currentCall.getName(),
+					Thread.currentThread().getName());
+
 			final AbstractEmployee availableEmployee = employees.poll();
 			if (availableEmployee != null) {
 
+				LOGGER.info("Ansering call...");
 				availableEmployee.answerCall(currentCall);
 				employees.add(availableEmployee);
 				callDao.save(currentCall);
@@ -149,8 +187,9 @@ public class CallDispatcher implements Callable<String> {
 				currentCall.setAttempts(Integer.sum(currentCall.getAttempts(), 1));
 				currentCall.setState(CallState.PENDING);
 				this.receiveIncomingCall(currentCall);
-				return currentCall.getResponse();
 			}
+
+			return currentCall.getResponse();
 		}
 
 		return "No more calls!";
