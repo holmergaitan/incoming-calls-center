@@ -74,6 +74,9 @@ public abstract class AbstractEmployee {
 				Thread.currentThread().getName()));
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		
